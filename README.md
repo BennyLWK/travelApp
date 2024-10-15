@@ -2,9 +2,21 @@
 
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
+## Screenshot
+
+<div id="header">
+  <img src="https://github.com/BennyLWK/travelApp/blob/main/doc/01_Home.jpg?raw=true" width="256"/>&nbsp
+  <img src="https://github.com/BennyLWK/travelApp/blob/main/doc/02_Detail.jpg?raw=true" width="256"/>
+</div>
+
+### Android App
+
+[<img src="./android/app/src/main/res/mipmap-xhdpi/ic_launcher.png">](https://dply.me/car7si)
+
 # Getting Started
 
 > **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+> https://docs.microsoft.com/en-us/windows/console/setconsolemode
 
 ## Step 1: Start the Metro Server
 
@@ -51,4 +63,5 @@ This is one way to run your app — you can also run it directly from within And
 ## To Be Implemented:
 
 - iOS part not yet testing since I using window PC.
-- add travel-related events directly from the app.
+- iOS: Add travel related events directly from the app.
+- Android: Set a reminder notification
