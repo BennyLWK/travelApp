@@ -1,9 +1,6 @@
 package com.travelapp
-import android.app.AlarmManager
-import android.app.PendingIntent
+
 import android.content.ContentValues
-import android.content.Context
-import android.content.Intent
 import android.provider.CalendarContract
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
@@ -43,13 +40,22 @@ class CalendarModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
                 put(CalendarContract.Events.EVENT_LOCATION, eventLocation)
                 put(CalendarContract.Events.CALENDAR_ID, 1) // Calendar ID (Make sure it exists)
                 put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().id)
+                put(CalendarContract.Events.HAS_ALARM, 1)
             }
 
             val uri = cr.insert(CalendarContract.Events.CONTENT_URI, values)
             if (uri != null) {
                 val eventId = uri.lastPathSegment?.toLong() ?: throw Exception("Failed to get event ID")
+
                 // Set reminder one day before the event
-                setReminder(eventId, startMillis - AlarmManager.INTERVAL_DAY)
+                val otherValues = ContentValues().apply {
+                    put(CalendarContract.Reminders.MINUTES, 24*60)
+                    put(CalendarContract.Reminders.EVENT_ID, eventId)
+                    put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT)
+                }
+                val ret = cr.insert(CalendarContract.Reminders.CONTENT_URI, otherValues)
+                Log.d("CalendarModule", "Reminder set for event ID $eventId")
+
                 promise.resolve(uri.toString())
             } else {
                 promise.reject("Error", "Failed to create event")
@@ -57,21 +63,6 @@ class CalendarModule(reactContext: ReactApplicationContext) : ReactContextBaseJa
         } catch (e: Exception) {
             promise.reject("Error", e)
         }
-    }
-
-    private fun setReminder(eventId: Long, reminderTime: Long) {
-        // Create an Intent to trigger the reminder notification
-        val intent = Intent(reactApplicationContext, ReminderReceiver::class.java).apply {
-            putExtra("eventId", eventId)
-        }
-
-        val pendingIntent = PendingIntent.getBroadcast(reactApplicationContext, eventId.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        // Set the alarm
-        val alarmManager = reactApplicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, reminderTime, pendingIntent)
-
-        Log.d("CalendarModule", "Reminder set for event ID $eventId at $reminderTime")
     }
 
 }

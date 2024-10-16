@@ -64,4 +64,3 @@ This is one way to run your app — you can also run it directly from within And
 
 - iOS part not yet testing since I using window PC.
 - iOS: Add travel related events directly from the app.
-- Android: Set a reminder notification
