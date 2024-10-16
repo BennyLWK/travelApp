@@ -60,6 +60,19 @@ If everything is set up _correctly_, you should see your new app running in your
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
+## Idea
+
+- Design reference from [here](https://dribbble.com/shots/13988973-Digitalz-Ticket)
+- Parsing the json data from local json file
+- Check whether the data is duplicate or not
+- Once the destination selected, will go to detail page and show the detail
+- In Detail page, the app will request the permission to access calendar
+- Click the booking button will call the native API to create the event
+
+### Assumption
+
+- All image url will display properly
+
 ## To Be Implemented:
 
 - iOS part not yet testing since I using window PC.
