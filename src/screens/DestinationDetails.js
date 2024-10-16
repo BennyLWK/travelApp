@@ -276,6 +276,9 @@ const DestinationDetails = ({navigation, route}) => {
                         setAddSuccess(false);
                         console.error('Error creating event:', error);
                       });
+                  } else {
+                    // Handler for iOS
+                    setAddSuccess(true);
                   }
                 } else {
                   requestCalendarPermission();
